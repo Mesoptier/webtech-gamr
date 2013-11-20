@@ -32,5 +32,3 @@ En over de user bijhoud:
 
 ## Coding Standard
 - tbd
-- PEP8?
-- PEAR?
