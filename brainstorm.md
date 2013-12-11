@@ -1,13 +1,13 @@
 # Brainstorm
 ## Concept:
 Een webapp die een zoekopdracht voor games uitvoert op verschillende sites:
-- Giantbomb
+- Giantbomb:
     = General info
-- Metacritic
+- Metacritic:
     = Review / Rating
-- WikiPedia (optional)
+- WikiPedia (optional):
     = General Info
-- IMDB
+- IMDB:
     = Voice Actors
     = Directors
     = Writers

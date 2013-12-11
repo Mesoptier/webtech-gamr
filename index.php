@@ -1,19 +1,25 @@
-<!DOCTYPE html>
-<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    
+        <title>GAMR - Main Page</title>
+        
+    </head>
+    <body>
+        <div id="Header">
+            
+        </div>
 
-	<?php
-		session_start();
-	?>
+        <div id="Content">
+            <?php
+                require_once("lorem.php");
+            ?>
+        </div>
 
-<align = center>
-<title>First file</title>
-</align>
-
-</head>
-
-<body>
-
-
-</body>
-
+        <div id="Footer">
+            
+        </div>
+    </body>
 </html>
