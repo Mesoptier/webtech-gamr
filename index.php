@@ -27,7 +27,9 @@
         </div>
 
         <div id="Main">
-            require_once("lorem.php")            
+            <?php
+                require_once("lorem.php")            
+            ?>
         </div>
 
         <div id="Footer">

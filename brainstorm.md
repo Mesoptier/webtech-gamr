@@ -2,17 +2,17 @@
 ## Concept:
 Een webapp die een zoekopdracht voor games uitvoert op verschillende sites:
 - Giantbomb:
-    = General info
+    + General info
 - Metacritic:
-    = Review / Rating
+    + Review / Rating
 - WikiPedia (optional):
-    = General Info
+    + General Info
 - IMDB:
-    = Voice Actors
-    = Directors
-    = Writers
+    + Voice Actors
+    + Directors
+    + Writers
 - YouTube
-    = Trailer
+    + Trailer
 - Beste games op metascore gesorteerd binnen een te selecteren genre?
 
 En over de user bijhoud:
@@ -20,15 +20,16 @@ En over de user bijhoud:
 - Suggesties voor top games (op metascore) in de categorie waar door de user meest in gezocht is gezochte ?
 
 ## Resources
-- Symfony
 - PHP
+- Javascript
+- SQLite
 - AJAX
 
 ## Tasks
-- Design Mockup
 - Design Implementation
-- Basic Functionality
+- Basic Backend Functionality
+- API Handling
 - Data arregation
 
 ## Coding Standard
-- tbd
+- PEAR
