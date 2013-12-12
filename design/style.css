@@ -1,0 +1,75 @@
+body {
+    font: 16px "Montserrat";
+    background: #00a3e7;
+}
+
+.home {
+    margin: 160px auto 0;
+    width: 800px;
+}
+
+.logo {
+    margin: 0;
+    text-transform: lowercase;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.logo a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.search-box {
+    margin-top: 10px;
+    width: 800px;
+    height: 70px;
+
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.search-input, .search-button {
+    float: left;
+    height: 70px;
+    padding: 0;
+    border: 0;
+}
+
+.search-input {
+    width: 670px;
+    padding: 0 30px;
+
+    font-family: inherit;
+    font-size: 20px;
+    color: #333;
+}
+
+.search-button {
+    width: 70px;
+}
+
+.results {
+    display: block;
+
+    width: 800px;
+    margin: 20px 0 0;
+    padding: 0;
+
+    list-style: none;
+
+    background: #fff;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+
+    transition: all 100ms ease-out;
+    opacity: 1;
+}
+
+.results.hidden {
+    margin-top: 10px;
+    opacity: 0;
+}
+
+.result-item {
+    padding: 10px 30px;
+}
