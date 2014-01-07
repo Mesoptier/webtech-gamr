@@ -3,6 +3,8 @@
 require "lib/Slim/Slim.php";
 \Slim\Slim::registerAutoloader();
 
+require "foobar/search.php";
+
 // Configurate the app
 $app = new \Slim\Slim(array(
     "mode" => "development",
@@ -26,17 +28,9 @@ $app->get("/game/:slug", function($slug) use ($app) {
 })->name("game");
 
 $app->get("/search-results", function() use ($app) {
-    $q = $app->request->get("q");
+    $search = $app->request->get("search");
 
-    $data = array(
-        array(
-            "url" => $app->urlFor("game", array("slug" => "battlefield-3")),
-            "title" => "Battlefield 3"
-        ), array(
-            "url" => $app->urlFor("game", array("slug" => "gta-v")),
-            "title" => "GTA V"
-        )
-    );
+    $data = getSearchResults($search);
 
     // Return the data in JSON
     $app->response->headers->set("Content-Type", "application/json");

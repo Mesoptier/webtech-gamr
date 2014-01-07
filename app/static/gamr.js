@@ -11,6 +11,8 @@ function requestSearchResults(search){
         setTimeout(function(){
             $.ajax({
                 url: "http://localhost/webtech-gamr/app/search-results",
+                data: { search: search },
+
                 success: function(data){
                     $(".results").empty();
 
