@@ -1,3 +1,68 @@
 body {
     margin: 0;
+    font: 16px "Montserrat";
+}
+
+.page-home {
+    background: #00a3e7;
+}
+
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.page-home .wrapper {
+    width: 800px;
+}
+
+.page-home .header {
+    margin: 80px 0 15px;
+}
+
+.logo {
+    margin: 0;
+    font-size: 2em;
+}
+
+.logo a {
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 2px 0 #0094d1;
+}
+
+.page-home .search {
+    margin-top: 15px;
+}
+
+.search {
+    height: 60px;
+    box-shadow: 0 2px 0 #0094d1;
+}
+
+.search-input {
+    float: left;
+    width: 700px;
+    height: 60px;
+
+    border: 0;
+    padding: 0 20px;
+    margin: 0;
+
+    font-family: inherit;
+    font-size: 1.2em;
+}
+
+.search-button {
+    float: left;
+    width: 60px;
+    height: 60px;
+
+    border: 0;
+    padding: 0;
+    margin: 0;
+
+    font-size: 1.2em;
+    background: #ddd;
 }
