@@ -23,14 +23,19 @@ $app->get("/", function() use ($app) {
 
 $app->get("/game/:slug", function($slug) use ($app) {
     $app->render("game.php");
-});
+})->name("game");
 
 $app->get("/search-results", function() use ($app) {
     $q = $app->request->get("q");
 
     $data = array(
-        array("id" => 1, "title" => "Battlefield 3"),
-        array("id" => 2, "title" => "GTA V")
+        array(
+            "url" => $app->urlFor("game", array("slug" => "battlefield-3")),
+            "title" => "Battlefield 3"
+        ), array(
+            "url" => $app->urlFor("game", array("slug" => "gta-v")),
+            "title" => "GTA V"
+        )
     );
 
     // Return the data in JSON
