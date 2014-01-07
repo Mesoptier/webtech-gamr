@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    font: 16px "Montserrat";
+    color: #333;
+}
+
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.header {
+    height: 80px;
+    background: #00a3e7;
+}
+
+.logo {
+    float: left;
+    margin: 20px 0;
+    width: 200px;
+    text-align: center;
+
+    text-transform: lowercase;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.logo a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.search-box {
+    float: left;
+    margin: 15px 15px;
+    width: 600px;
+    height: 50px;
+
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.search-input, .search-button {
+    float: left;
+    height: 50px;
+    padding: 0;
+    border: 0;
+}
+
+.search-input {
+    width: 490px;
+    padding: 0 20px;
+
+    font-family: inherit;
+    font-size: 20px;
+    color: #333;
+    outline: 0;
+}
+
+.search-button {
+    width: 70px;
+    font-size: 20px;
+    color: #222;
+
+    background: #ddd;
+    outline: 0;
+}
+
+.search-button:hover {
+    background: #d8d8d8;
+}
+
+.search-button:active {
+    background: #ccc;
+}
+
+.details {
+    margin-top: 20px;
+    float: left;
+    width: 200px;
+}
+
+.poster {
+    width: 100%;
+}
+
+.metascore {
+    padding-top: 10px;
+    height: 60px;
+}
+
+.metascore {
+    margin: 15px 0;
+
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+.metascore-low { background-color: #f00; }
+.metascore-mid { background-color: #fc3; }
+.metascore-high { background-color: #6c3; }
+
+.metascore .score {
+    display: block;
+    font-size: 26px;
+}
+
+.detail {
+    margin: 15px 0;
+}
+
+.detail-title {
+    display: block;
+    text-transfom: uppercase;
+    font-size: 12px;
+    color: #888;
+}
+
+.content {
+    margin: 20px 0 0 30px;
+    width: 730px;
+    float: left;
+
+}
+
+h2 {
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+.description {
+
+}

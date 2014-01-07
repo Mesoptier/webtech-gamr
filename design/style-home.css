@@ -43,10 +43,24 @@ body {
     font-family: inherit;
     font-size: 20px;
     color: #333;
+    outline: 0;
 }
 
 .search-button {
     width: 70px;
+    font-size: 20px;
+    color: #222;
+
+    background: #ddd;
+    outline: 0;
+}
+
+.search-button:hover {
+    background: #d8d8d8;
+}
+
+.search-button:active {
+    background: #ccc;
 }
 
 .results {
