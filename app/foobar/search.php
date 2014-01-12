@@ -18,23 +18,26 @@ function getSearchResults($search, $fields = "name,id", $limit = 5){
     foreach ($data->results as $result){
         $returnArray[] = [
             "title" => $result->name,
+            "id" => $result->id,
             "slug" => generateSlug($result->name)
         ];
     }
 
+
+
     return $returnArray;
 }
 
-function getGameInfo($gameID, $fields=DESIRED_FIELDS){
+function getGameInfo($gameID, $fields = "name,id"){
     $requestURL = "http://www.giantbomb.com/api/game/"
         . $gameID
         . "?api_key=" . GIANTBOMB_APIKEY
-        . "&field_list=" . DESIRED_FIELDS
-        . "&resources=game"
+        . "&field_list=" . $fields
         . "&format=json";
 
     // Get the data
     $data = json_decode(file_get_contents($requestURL));
+
     $returnArray = [];
 
     //TODO Search trough the array of devs, platforms, franchises to return correct results

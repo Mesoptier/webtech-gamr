@@ -24,7 +24,19 @@ $app->get("/", function() use ($app) {
 });
 
 $app->get("/game/:slug", function($slug) use ($app) {
-    $app->render("game.php");
+    $data = array(
+        "game" => array(
+            "title" => "Battlefield 3",
+            "poster" => "http://upload.wikimedia.org/wikipedia/en/6/69/Battlefield_3_Game_Cover.jpg",
+            "metascore" => 89,
+            "release_date" => "25 October 2011",
+            "platforms" => "PC, Xbox 360, PS3",
+            "developer" => "DICE",
+            "publisher" => "Electronic Arts"
+        )
+    );
+
+    $app->render("game.php", $data);
 })->name("game");
 
 $app->get("/search-results", function() use ($app) {

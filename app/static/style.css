@@ -16,13 +16,18 @@ body {
     width: 800px;
 }
 
+.page-game .header {
+    height: 80px;
+    background: #00a3e7;
+}
+
 .page-home .header {
     margin: 80px 0 15px;
 }
 
 .logo {
     margin: 0;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 .logo a {
@@ -32,8 +37,28 @@ body {
     text-shadow: 0 2px 0 #0094d1;
 }
 
+.page-game .header .logo {
+    float: left;
+    width: 200px;
+    padding: 18px 0;
+    text-align: center;
+}
+
+.page-game .header .search-box {
+    float: left;
+}
+
 .page-home .search {
     margin-top: 15px;
+}
+
+.page-game .search {
+    margin: 15px;
+    height: 50px;
+}
+
+.page-game .search-input {
+    width: 490px;
 }
 
 .search {
@@ -43,8 +68,7 @@ body {
 
 .search-input {
     float: left;
-    width: 700px;
-    height: 60px;
+    height: 100%;
 
     border: 0;
     padding: 0 20px;
@@ -56,9 +80,8 @@ body {
 }
 
 .search-button {
-    float: left;
     width: 60px;
-    height: 60px;
+    height: 100%;
 
     border: 0;
     padding: 0;
@@ -106,4 +129,63 @@ body {
 
 .result-item a:active {
     background: #eee;
+}
+
+.details {
+    margin-top: 20px;
+    float: left;
+    width: 200px;
+}
+
+.poster {
+    width: 100%;
+}
+
+.metascore {
+    padding-top: 10px;
+    height: 60px;
+}
+
+.metascore {
+    margin: 15px 0;
+
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+.metascore-low { background-color: #f00; }
+.metascore-mid { background-color: #fc3; }
+.metascore-high { background-color: #6c3; }
+
+.metascore .score {
+    display: block;
+    font-size: 26px;
+}
+
+.detail {
+    margin: 15px 0;
+}
+
+.detail-title {
+    display: block;
+    text-transfom: uppercase;
+    font-size: 12px;
+    color: #888;
+}
+
+.content {
+    margin: 20px 0 0 30px;
+    width: 730px;
+    float: left;
+
+}
+
+h2 {
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+.description {
+
 }

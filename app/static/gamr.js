@@ -1,17 +1,17 @@
 $(function(){
     $(".search-input").on("input", function(){
-        requestSearchResults($(this).val());
+        requestSearchResults($(this));
     });
 });
 
 var searchWait = false;
-function requestSearchResults(search){
+function requestSearchResults($search){
     if (!searchWait){
         searchWait = true;
         setTimeout(function(){
             $.ajax({
                 url: "http://localhost/webtech-gamr/app/search-results",
-                data: { search: search },
+                data: { search: $search.val() },
 
                 success: function(data){
                     $(".results").empty();
@@ -19,8 +19,8 @@ function requestSearchResults(search){
                     if (data.length > 0){
                         for (var i = 0; i < data.length; i++){
                             $(".results").append(
-                                "<li class=\"result-item\"><a href=\"" +
-                                data[i].url + "\">" + data[i].title + "</a></li>");
+                                "<li class=\"result-item\"><a href=\"game/" +
+                                data[i].id + "\">" + data[i].title + "</a></li>");
                         }
                     }
                 },

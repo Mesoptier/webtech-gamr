@@ -17,10 +17,12 @@
             <h1 class="logo"><a href="#home">Gamr</a></h1>
         </div>
     </header>
-    <form class="search wrapper" method="get">
-        <input class="search-input" type="text" placeholder="Search games..." name="search">
-        <button class="search-button" title="Click here if your name is Paul de Bra."><i class="fa fa-search"></i></button>
-    </form>
-    <ul class="results wrapper"></ul>
+    <div class="search-box wrapper">
+        <form class="search" method="get">
+            <input class="search-input" type="text" placeholder="Search games..." name="search">
+            <button class="search-button" title="Click here if your name is Paul de Bra."><i class="fa fa-search"></i></button>
+        </form>
+        <ul class="results"></ul>
+    </div>
 </body>
 </html>
