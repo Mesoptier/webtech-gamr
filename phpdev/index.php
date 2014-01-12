@@ -47,53 +47,109 @@ Description
 -->
     <div id='ContentTest'>
         <?php
-            ini_set('display_errors', 1);
-            error_reporting(E_ALL);
-            // Function to search couples of titles and id's from the GiantBomb API
-            // @param: search term
-            // @returns: a list of tuples with [title, id]
-            function searchForTitles($searchterm, $fields, $resultlimit) {
-                $apikey = 'd303fa0d18fd57f59b72ea99938c8a8001ca131a';
 
-                $requestURL = 'http://www.giantbomb.com/api/search/'
-                    .'?api_key='.$apikey
-                    .'&format=json&query='.$searchterm
-                    .'&field_list='.$fields
-                    .'&limit='.$resultlimit;
-                $rawcontent = file_get_contents($requestURL);
-                $parsedcontent = json_decode($rawcontent, true);
+        define("GIANTBOMB_APIKEY", "d303fa0d18fd57f59b72ea99938c8a8001ca131a");
 
-                //XXX DEBUG -------------------------------------------------------
-                // return var_dump($parsedcontent);
-                //XXX DEBUG -------------------------------------------------------
+        function getSearchResults($search, $fields = "name,id", $limit = 5){
+            $requestURL = "http://www.giantbomb.com/api/search/"
+                . "?api_key=" . GIANTBOMB_APIKEY
+                . "&format=json&query=" . $search
+                . "&field_list=" . $fields
+                . "&limit=" . $limit
+                . "&resources=game";
 
-                // $numberOfResults = $parsedcontent['number_of_total_results'];
-                $numberOfResults = $parsedcontent['number_of_page_results'];
-                $returnArray = [];
-                
-                for ($i = 0; $i < $numberOfResults; $i++) {
-                    $currentName    = $parsedcontent['results'][$i]['name'];
-                    $currentId      = $parsedcontent['results'][$i]['id'];
-                    $returnArray[] = [
-                        'name' => $currentName, 
-                        'id' => $currentId, 
-                        'slug' => gen_slug($currentName)
-                    ];
-                }
+            // Get the data
+            $data = json_decode(file_get_contents($requestURL));
 
-                return $returnArray;
+            $returnArray = [];
+
+            foreach ($data->results as $result){
+                $returnArray[] = [
+                    "title" => $result->name,
+                    "slug" => generateSlug($result->name),
+                    "id" => $result->id
+                ];
             }
 
-            function gen_slug($str){
-                $a = array('À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ð','Ñ','Ò','Ó','Ô','Õ','Ö','Ø','Ù','Ú','Û','Ü','Ý','ß','à','á','â','ã','ä','å','æ','ç','è','é','ê','ë','ì','í','î','ï','ñ','ò','ó','ô','õ','ö','ø','ù','ú','û','ü','ý','ÿ','A','a','A','a','A','a','C','c','C','c','C','c','C','c','D','d','Ð','d','E','e','E','e','E','e','E','e','E','e','G','g','G','g','G','g','G','g','H','h','H','h','I','i','I','i','I','i','I','i','I','i','?','?','J','j','K','k','L','l','L','l','L','l','?','?','L','l','N','n','N','n','N','n','?','O','o','O','o','O','o','Œ','œ','R','r','R','r','R','r','S','s','S','s','S','s','Š','š','T','t','T','t','T','t','U','u','U','u','U','u','U','u','U','u','U','u','W','w','Y','y','Ÿ','Z','z','Z','z','Ž','ž','?','ƒ','O','o','U','u','A','a','I','i','O','o','U','u','U','u','U','u','U','u','U','u','?','?','?','?','?','?');
-                $b = array('A','A','A','A','A','A','AE','C','E','E','E','E','I','I','I','I','D','N','O','O','O','O','O','O','U','U','U','U','Y','s','a','a','a','a','a','a','ae','c','e','e','e','e','i','i','i','i','n','o','o','o','o','o','o','u','u','u','u','y','y','A','a','A','a','A','a','C','c','C','c','C','c','C','c','D','d','D','d','E','e','E','e','E','e','E','e','E','e','G','g','G','g','G','g','G','g','H','h','H','h','I','i','I','i','I','i','I','i','I','i','IJ','ij','J','j','K','k','L','l','L','l','L','l','L','l','l','l','N','n','N','n','N','n','n','O','o','O','o','O','o','OE','oe','R','r','R','r','R','r','S','s','S','s','S','s','S','s','T','t','T','t','T','t','U','u','U','u','U','u','U','u','U','u','U','u','W','w','Y','y','Y','Z','z','Z','z','Z','z','s','f','O','o','U','u','A','a','I','i','O','o','U','u','U','u','U','u','U','u','U','u','A','a','AE','ae','O','o');
-                return strtolower(preg_replace(array('/[^a-zA-Z0-9 -]/','/[ -]+/','/^-|-$/'),array('','-',''),str_replace($a,$b,$str)));
+            return $returnArray;
+        }
+
+        function getGameInfo($gameID, $fields="name,image,platforms,genres,publishers,similar_games,developers"){
+            $requestURL = "http://www.giantbomb.com/api/game/"
+                . $gameID
+                . "?api_key=" . GIANTBOMB_APIKEY
+                . "&field_list=" . $fields
+                . "&resources=game"
+                . "&format=json";
+
+            // Get the data
+            $data = json_decode(file_get_contents($requestURL));
+            $returnArray = [];
+
+            //TODO Search trough the array of devs, platforms, franchises to return correct results
+            $gameName = $data->results->name;
+            $gameImage = $data->results->image->medium_url;
+            $gameDescription = $data->results->description;
+
+            $gamePlatforms = [];
+            foreach($data->results->platforms as $platform) {
+                $gamePlatforms[] = $platform->name;
+            }
+
+            $gameDevelopers = [];
+            foreach($data->results->developers as $developers) {
+                $gameDevelopers[] = $developers->name;
+            }
+            
+            $gamePublishers = [];
+            foreach($data->results->publishers as $publishers) {
+                $gamePublishers[] = $publishers->name;
+            }
+
+            $gameSimilars = [];
+            foreach($data->results->similar_games as $similarGames) {
+                $gameSimilars[] = [
+                    "name" => $similarGames->name,
+                    "id" => $similarGames->id
+                ];
+            }
+
+            $gameFranchises = [];
+            foreach($data->results->franchises as $franchises) {
+                $gameFranchises[] = $franchises->name;
+            }
+
+            $gameGenres = [];
+            foreach($data->results->genres as $genres) {
+                $gameGenres[] = $genres->name;
             }
 
 
-            print_r(searchForTitles('battlefield', 'name,id', 8));
+            $returnArray = [
+                "name" => $gameName,
+                "image_url" => $gameImage,
+                "description" => $gameDescription,
+                "platforms" => $gamePlatforms,
+                "developers" => $gameDevelopers,
+                "franchises" => $gameFranchises,
+                "genres" => $gameGenres,
+                "similar_games" => $gameSimilars
+            ];
+
+            // return $data; //DEBUG
+            return $returnArray;
+        }
+
+        function generateSlug($str){
+            $a = array('À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ð','Ñ','Ò','Ó','Ô','Õ','Ö','Ø','Ù','Ú','Û','Ü','Ý','ß','à','á','â','ã','ä','å','æ','ç','è','é','ê','ë','ì','í','î','ï','ñ','ò','ó','ô','õ','ö','ø','ù','ú','û','ü','ý','ÿ','A','a','A','a','A','a','C','c','C','c','C','c','C','c','D','d','Ð','d','E','e','E','e','E','e','E','e','E','e','G','g','G','g','G','g','G','g','H','h','H','h','I','i','I','i','I','i','I','i','I','i','?','?','J','j','K','k','L','l','L','l','L','l','?','?','L','l','N','n','N','n','N','n','?','O','o','O','o','O','o','Œ','œ','R','r','R','r','R','r','S','s','S','s','S','s','Š','š','T','t','T','t','T','t','U','u','U','u','U','u','U','u','U','u','U','u','W','w','Y','y','Ÿ','Z','z','Z','z','Ž','ž','?','ƒ','O','o','U','u','A','a','I','i','O','o','U','u','U','u','U','u','U','u','U','u','?','?','?','?','?','?');
+
+            $b = array('A','A','A','A','A','A','AE','C','E','E','E','E','I','I','I','I','D','N','O','O','O','O','O','O','U','U','U','U','Y','s','a','a','a','a','a','a','ae','c','e','e','e','e','i','i','i','i','n','o','o','o','o','o','o','u','u','u','u','y','y','A','a','A','a','A','a','C','c','C','c','C','c','C','c','D','d','D','d','E','e','E','e','E','e','E','e','E','e','G','g','G','g','G','g','G','g','H','h','H','h','I','i','I','i','I','i','I','i','I','i','IJ','ij','J','j','K','k','L','l','L','l','L','l','L','l','l','l','N','n','N','n','N','n','n','O','o','O','o','O','o','OE','oe','R','r','R','r','R','r','S','s','S','s','S','s','S','s','T','t','T','t','T','t','U','u','U','u','U','u','U','u','U','u','U','u','W','w','Y','y','Y','Z','z','Z','z','Z','z','s','f','O','o','U','u','A','a','I','i','O','o','U','u','U','u','U','u','U','u','U','u','A','a','AE','ae','O','o');
+            return strtolower(preg_replace(array('/[^a-zA-Z0-9 -]/','/[ -]+/','/^-|-$/'),array('','-',''),str_replace($a,$b,$str)));
+        }
+
+        print_r(getSearchResults("Battlefield"));
+        print_r(getGameInfo(16866));
         ?>
-        
     </div>
 </body>
 </html>
