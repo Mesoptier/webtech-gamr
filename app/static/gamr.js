@@ -20,6 +20,8 @@ function requestSearchResults($search){
     if (!searchWait){
         searchWait = true;
         setTimeout(function(){
+            searchWait = false;
+
             $.ajax({
                 url: "search-results",
                 data: { search: $(".search-input").val() },
@@ -37,12 +39,8 @@ function requestSearchResults($search){
                                 data[i].id + "\">" + data[i].title + "</a></li>");
                         }
                     }
-                },
-
-                complete: function(){
-                    searchWait = false;
                 }
             });
-        }, 200);
+        }, 500);
     }
 }
