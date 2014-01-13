@@ -32,8 +32,9 @@
             <?php if (isset($game["metascore"])): ?><div class="metascore metascore-<?= ($game["metascore"] >= 75 ? "high" : ($game["metascore"] >= 50 ? "mid" : "low")) ?>"><span class="score"><?= $game["metascore"] ?></span>Metascore</div><?php endif; ?>
             <?php if (isset($game["release_date"])): ?><div class="detail"><span class="detail-title">Release date</span><?= date("j F Y", $game["release_date"]) ?></div><?php endif; ?>
             <?php if (isset($game["platforms"])): ?><div class="detail"><span class="detail-title">Platforms</span><?= implode(", ", $game["platforms"]) ?></div><?php endif; ?>
-            <?php if (isset($game["developers"])): ?><div class="detail"><span class="detail-title">Developer</span><?= implode(", ", $game["developers"]) ?></div><?php endif; ?>
-            <?php if (isset($game["publishers"])): ?><div class="detail"><span class="detail-title">Publisher</span><?= implode(", ", $game["publishers"]) ?></div><?php endif; ?>
+            <?php if (isset($game["developers"])): ?><div class="detail"><span class="detail-title">Developers</span><?= implode(", ", $game["developers"]) ?></div><?php endif; ?>
+            <?php if (isset($game["publishers"])): ?><div class="detail"><span class="detail-title">Publishers</span><?= implode(", ", $game["publishers"]) ?></div><?php endif; ?>
+            <?php if (isset($game["similar"])): ?><div class="detail"><span class="detail-title">Similar games</span><?php foreach ($game["similar"] as $similar): ?><a href="game/<?= $similar["id"] ?>" title="<?= $similar["title"] ?>"><img style="width: 90px; margin-right: 10px;" src="<?= $similar["poster"]; ?>"></a><?php endforeach; ?></div></div><?php endif; ?>
         </div>
         <div class="content">
             <h2><?= $game["title"] ?></h2>

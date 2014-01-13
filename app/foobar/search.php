@@ -38,6 +38,8 @@ function getGameInfo($gameID, $fields="name,image,platforms,genres,publishers,si
 
     $returnData = [];
 
+    $returnData["id"] = $gameID;
+
     if (isset($data->name))
         $returnData["title"] = $data->name;
 
@@ -64,10 +66,10 @@ function getGameInfo($gameID, $fields="name,image,platforms,genres,publishers,si
 
     // Similar games
     if (isset($data->similar_games)){
-        $returnData["similars"] = [];
+        $returnData["similar"] = [];
 
         foreach($data->similar_games as $game)
-            $returnData["similars"][] = getGameInfo($game->id, "name,image");
+            $returnData["similar"][] = getGameInfo($game->id, "name,image");
     }
 
     return $returnData;
