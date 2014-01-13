@@ -5,7 +5,7 @@ define("GIANTBOMB_APIKEY", "d303fa0d18fd57f59b72ea99938c8a8001ca131a");
 function getSearchResults($search, $fields = "name,id", $limit = 5){
     $requestURL = "http://www.giantbomb.com/api/search/"
         . "?api_key=" . GIANTBOMB_APIKEY
-        . "&format=json&query=" . $search
+        . "&format=json&query=" . urlencode($search)
         . "&field_list=" . $fields
         . "&limit=" . $limit
         . "&resources=game";
@@ -18,41 +18,63 @@ function getSearchResults($search, $fields = "name,id", $limit = 5){
     foreach ($data->results as $result){
         $returnArray[] = [
             "title" => $result->name,
-            "id" => $result->id,
-            "slug" => generateSlug($result->name)
+            "id" => $result->id
         ];
     }
-
-
 
     return $returnArray;
 }
 
-function getGameInfo($gameID, $fields = "name,id"){
+function getGameInfo($gameID, $fields="name,image,platforms,genres,publishers,similar_games,developers,description,original_release_date"){
     $requestURL = "http://www.giantbomb.com/api/game/"
-        . $gameID
+        . urlencode($gameID)
         . "?api_key=" . GIANTBOMB_APIKEY
         . "&field_list=" . $fields
+        . "&resources=game"
         . "&format=json";
 
-    // Get the data
-    $data = json_decode(file_get_contents($requestURL));
+    // Get the data and decode the JSON into an object
+    $data = json_decode(file_get_contents($requestURL))->results;
 
-    $returnArray = [];
+    $returnData = [];
 
-    //TODO Search trough the array of devs, platforms, franchises to return correct results
-    $returnArray = [
-        "name" => $data->results->name,
-        "image_url" => $data->results->image->medium_url,
-        "description" => $data->results->description,
-        // "platforms" => $data->results->platforms,
-        // "developers" => $data->results->developers,
-        // "franchises" => $data->results->franchises,
-        // "genres" => $data->results->genres,
-        // "similar_games" => $data->results->similar_games
-    ];
+    if (isset($data->name))
+        $returnData["title"] = $data->name;
 
-    return $returnArray;
+    if (isset($data->image->medium_url))
+        $returnData["poster"] = $data->image->medium_url;
+
+    if (isset($data->description))
+        $returnData["description"] = $data->description;
+
+    if (isset($data->original_release_date))
+        $returnData["release_date"] = strtotime($data->original_release_date);
+
+    if (isset($data->platforms))
+        $returnData["platforms"] = array_map("mapName", $data->platforms);
+
+    if (isset($data->developers))
+        $returnData["developers"] = array_map("mapName", $data->developers);
+
+    if (isset($data->publishers))
+        $returnData["publishers"] = array_map("mapName", $data->publishers);
+
+    if (isset($data->genres))
+        $returnData["genres"] = array_map("mapName", $data->genres);
+
+    // Similar games
+    if (isset($data->similar_games)){
+        $returnData["similars"] = [];
+
+        foreach($data->similar_games as $game)
+            $returnData["similars"][] = getGameInfo($game->id, "name,image");
+    }
+
+    return $returnData;
+}
+
+function mapName($item){
+    return $item->name;
 }
 
 function generateSlug($str){

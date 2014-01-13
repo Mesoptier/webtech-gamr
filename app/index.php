@@ -15,6 +15,7 @@ $app = new \Slim\Slim(array(
 
 // Set default view variables
 $app->view->setData(array(
+    "base_path" => $app->request->getRootUri(),
     "static_path" => $app->request->getRootUri() . "/static/"
 ));
 
@@ -23,20 +24,14 @@ $app->get("/", function() use ($app) {
     $app->render("home.php");
 });
 
-$app->get("/game/:slug", function($slug) use ($app) {
-    $data = array(
-        "game" => array(
-            "title" => "Battlefield 3",
-            "poster" => "http://upload.wikimedia.org/wikipedia/en/6/69/Battlefield_3_Game_Cover.jpg",
-            "metascore" => 89,
-            "release_date" => "25 October 2011",
-            "platforms" => "PC, Xbox 360, PS3",
-            "developer" => "DICE",
-            "publisher" => "Electronic Arts"
-        )
-    );
+$app->get("/game/:id", function($id) use ($app) {
+    $game = getGameInfo($id);
 
-    $app->render("game.php", $data);
+    $game["metascore"] = rand(40, 90);
+
+    $app->render("game.php", array(
+        "game" => $game
+    ));
 })->name("game");
 
 $app->get("/search-results", function() use ($app) {
