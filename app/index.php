@@ -5,6 +5,8 @@ require "lib/Slim/Slim.php";
 
 require "foobar/search.php";
 
+date_default_timezone_set('America/New_York');
+
 // Configurate the app
 $app = new \Slim\Slim(array(
     "mode" => "development",
