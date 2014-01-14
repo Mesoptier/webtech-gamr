@@ -27,7 +27,7 @@ $app->get("/", function() use ($app) {
 });
 
 $app->get("/game/:id", function($id) use ($app) {
-    $game = getGameInfo($id, "name,image,platforms,genres,publishers,developers,original_release_date");
+    $game = getGameInfo($id, "name,image,platforms,genres,publishers,description,developers,original_release_date,similar_games");
 
     $game["metascore"] = rand(40, 90);
 
