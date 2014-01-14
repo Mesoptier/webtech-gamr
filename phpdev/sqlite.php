@@ -12,31 +12,36 @@
                 // Connect to DB
                 $db = new SQLite3('searches.db');
 
-                $results = $db->query('SELECT * FROM searches');
-                while($row = $results->fetchArray()) {
-                   $hello = var_dump($row);
-                }
+                $results = $db->query( 
+                    'INSERT INTO searches VALUES(' .
+                    '\'' .
+                    $query .
+                    '\',' .
+                    time() .
+                    ')' 
+                );
                 
                 // Close the DB connection
                 $db->close();
             }
 
-            function getTopFiveSearches() {
+            function getLastFiveSearches() {
                 // Connect to DB
                 $db = new SQLite3('searches.db');
 
-                $results = $db->query('SELECT * FROM searches');
+                $results = $db->query(
+                    'SELECT * FROM searches ORDER BY time DESC LIMIT 5'
+                );
                 while($row = $results->fetchArray()) {
-                   $hello = var_dump($row);
+                   var_dump($row);
                 }
                 
                 // Close the DB connection
                 $db->close();
             }
 
-            registerSearch("void");
-
-
+            registerSearch('fooBar5');
+            getLastFiveSearches();
         ?>
     </body>
 </html>
