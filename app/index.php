@@ -4,6 +4,7 @@ require "lib/Slim/Slim.php";
 \Slim\Slim::registerAutoloader();
 
 require "foobar/search.php";
+require "foobar/sqlite.php";
 
 date_default_timezone_set('America/New_York');
 
@@ -28,6 +29,7 @@ $app->get("/", function() use ($app) {
 
 $app->get("/game/:id", function($id) use ($app) {
     $game = getGameInfo($id, "name,image,platforms,genres,publishers,description,developers,original_release_date,similar_games");
+    registerSearch($game["name"]);
 
     $game["metascore"] = rand(40, 90);
 
