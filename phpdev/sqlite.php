@@ -43,8 +43,14 @@
             }
 
             registerSearch('fooBar6');
-            print_r(getLastFiveSearches());
-            echo "hi";
+            // print_r(getLastFiveSearches());
+            echo '<ul>';
+            foreach (getLastFiveSearches() as $result) {
+                echo '<li>';
+                echo $result;
+                echo '</li>';
+            }
+            echo '</ul>';
         ?>
     </body>
 </html>
