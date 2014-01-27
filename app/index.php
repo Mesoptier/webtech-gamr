@@ -25,14 +25,16 @@ $app->view->setData(array(
 
 // Routing
 $app->get("/", function() use ($app) {
-    $app->render("home.php");
+    $app->render("home.php", array(
+        "recent_searches" => getLastFiveSearches()
+    ));
 });
 
 $app->get("/game/:id", function($id) use ($app) {
-    $app->etag("game-" + $id);
+    //$app->etag("game-" + $id);
 
     $game = getGameInfo($id, "name,image,platforms,genres,publishers,description,developers,original_release_date,similar_games");
-    registerSearch($game["name"]);
+    registerSearch($game);
 
     $game["metascore"] = rand(75, 90);
 
@@ -43,7 +45,7 @@ $app->get("/game/:id", function($id) use ($app) {
 
 $app->get("/search-results", function() use ($app) {
     $search = $app->request->get("search");
-    $app->etag("search-" + $search);
+    //$app->etag("search-" + $search);
 
     $data = getSearchResults($search);
 

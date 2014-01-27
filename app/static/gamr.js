@@ -2,10 +2,10 @@ var doSearch = false,
     searchWait = false;
 
 $(function(){
-    $(".results").hide();
+    $("#results").hide();
                         
     $(".search-input").on("input", function(){
-        requestSearchResults($(this));
+        requestSearchResults();
     });
 
     $(".search").on("submit", function(e){
@@ -14,11 +14,11 @@ $(function(){
         if (searchWait)
             doSearch = true;
         else
-            location.href = $(".results li:first a").attr("href");
+            location.href = $("#results li:first a").attr("href");
     });
 });
 
-function requestSearchResults($search){
+function requestSearchResults(){
     if (!searchWait){
         searchWait = true;
         setTimeout(function(){
@@ -29,23 +29,24 @@ function requestSearchResults($search){
                 data: { search: $(".search-input").val() },
 
                 success: function(data){
-                    $(".results").empty();
+                    $("#results").empty();
 
                     if (data.length > 0){
-                        $(".results").show();
+                        $("#results").show();
 
                         if (doSearch)
                             location.href = "game/" + data[0].id;
 
                         for (var i = 0; i < data.length; i++){
-                            $(".results").append(
+                            $("#results").append(
                                 "<li class=\"result-item\"><a href=\"game/" +
                                 data[i].id + "\">" + data[i].title + "</a></li>");
                         }
                     } else {
-                        $(".results").hide();
+                        $("#results").hide();
                     }
-                }
+                }, error: function(e){ 
+        console.log(e)}
             });
         }, 500);
     }

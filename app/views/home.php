@@ -25,7 +25,13 @@
             <input class="search-input" type="text" placeholder="Search games..." name="search">
             <button class="search-button" title="Click here if your name is Paul de Bra."><i class="fa fa-search"></i></button>
         </form>
-        <ul class="results"></ul>
+        <ul class="results" id="results"></ul>
+        <h3 style="color: white; margin-top: 50px">Recent searches:</h3>
+        <ul class="results">
+        <?php foreach ($recent_searches as $search): ?>
+            <li class="result-item"><a href="game/<?= $search["id"] ?>"><?= $search["name"] ?></a></li>
+        <?php endforeach; ?>
+        </ul>
     </div>
 </body>
 </html>

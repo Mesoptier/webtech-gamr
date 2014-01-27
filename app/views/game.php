@@ -24,7 +24,7 @@
                     <input class="search-input" type="text" placeholder="Search games..." name="search">
                     <button class="search-button" title="Click here if your name is Paul de Bra."><i class="fa fa-search"></i></button>
                 </form>
-                <ul class="results"></ul>
+                <ul class="results" id="results"></ul>
             </div>
         </div>
     </header>
