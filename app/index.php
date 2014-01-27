@@ -7,6 +7,7 @@ require "foobar/search.php";
 require "foobar/sqlite.php";
 
 date_default_timezone_set('America/New_York');
+ini_set('max_execution_time', 300);
 
 // Configurate the app
 $app = new \Slim\Slim(array(
@@ -28,10 +29,12 @@ $app->get("/", function() use ($app) {
 });
 
 $app->get("/game/:id", function($id) use ($app) {
+    $app->etag("game-" + $id);
+
     $game = getGameInfo($id, "name,image,platforms,genres,publishers,description,developers,original_release_date,similar_games");
     registerSearch($game["name"]);
 
-    $game["metascore"] = rand(40, 90);
+    $game["metascore"] = rand(75, 90);
 
     $app->render("game.php", array(
         "game" => $game
@@ -40,6 +43,7 @@ $app->get("/game/:id", function($id) use ($app) {
 
 $app->get("/search-results", function() use ($app) {
     $search = $app->request->get("search");
+    $app->etag("search-" + $search);
 
     $data = getSearchResults($search);
 

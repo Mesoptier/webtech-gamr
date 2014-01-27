@@ -2,6 +2,8 @@ var doSearch = false,
     searchWait = false;
 
 $(function(){
+    $(".results").hide();
+                        
     $(".search-input").on("input", function(){
         requestSearchResults($(this));
     });
@@ -30,6 +32,8 @@ function requestSearchResults($search){
                     $(".results").empty();
 
                     if (data.length > 0){
+                        $(".results").show();
+
                         if (doSearch)
                             location.href = "game/" + data[0].id;
 
@@ -38,6 +42,8 @@ function requestSearchResults($search){
                                 "<li class=\"result-item\"><a href=\"game/" +
                                 data[i].id + "\">" + data[i].title + "</a></li>");
                         }
+                    } else {
+                        $(".results").hide();
                     }
                 }
             });
