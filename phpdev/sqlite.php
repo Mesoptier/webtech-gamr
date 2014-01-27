@@ -28,20 +28,23 @@
             function getLastFiveSearches() {
                 // Connect to DB
                 $db = new SQLite3('searches.db');
+                $returnArray = [];
 
                 $results = $db->query(
                     'SELECT * FROM searches ORDER BY time DESC LIMIT 5'
                 );
                 while($row = $results->fetchArray()) {
-                   var_dump($row);
+                   $returnArray[] = $row[0];
                 }
-                
+                //
                 // Close the DB connection
+                return $returnArray;
                 $db->close();
             }
 
-            registerSearch('fooBar5');
-            getLastFiveSearches();
+            registerSearch('fooBar6');
+            print_r(getLastFiveSearches());
+            echo "hi";
         ?>
     </body>
 </html>
